@@ -19,23 +19,25 @@ namespace Capgemini.APIREST.Controllers
         }
 
         // GET: api/clients/5
-
-        public ActionResult<IEnumerable<Client>> Get(int id)
+        [HttpGet("{Client}")]
+        public ActionResult<IEnumerable<Client>> Get([FromQuery] int id)
         {
             Client client = RepositoryClient.Clients.FirstOrDefault(l => l.ID == id);
-
-            return RepositoryClient.Clients;
+            return Ok(client);
+            
+           
         }
 
         // POST: api/client
         [HttpPost]
         public ActionResult<IEnumerable<Client>> Post([FromBody] Client objeto)
         {
-            Client livro = RepositoryClient.Clients.FirstOrDefault(l => l.ID == objeto.ID);
+            Client client = RepositoryClient.Clients.FirstOrDefault(l => l.ID == objeto.ID);
 
 
             RepositoryClient.Clients.Add(objeto);
-            return RepositoryClient.Clients;
+            return Created("api/client",client);
+
 
         }
 
@@ -47,7 +49,8 @@ namespace Capgemini.APIREST.Controllers
 
             client.Name = objeto.Name;
             client.Email = objeto.Email;
-            return RepositoryClient.Clients;
+            //return RepositoryClient.Clients;
+            return Ok();
         }
         [HttpPatch]
         // PUT: api/client/5
